@@ -17,10 +17,10 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: Add GitHub Packages
-      run: dotnet nuget add source https://nuget.pkg.github.com/rcangus/index.json --name "github" --store-password-in-clear-text --username rcangus --password ${{ secrets.PACKAGES_PAT }}
-    - name: Restore Nuget Packages
-      run: dotnet restore source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
+    - name: Add GitHub Packages and Restore
+      run: |
+        dotnet nuget add source https://nuget.pkg.github.com/rcangus/index.json --name "github" --store-password-in-clear-text --username rcangus --password ${{ secrets.PACKAGES_PAT }}
+        dotnet restore source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
     - name: Build
       run: dotnet build source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --configuration Release --no-restore
     - name: Test
