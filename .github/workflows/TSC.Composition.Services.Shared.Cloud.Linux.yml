@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 3.1.301
     - name: Install dependencies
       run: 
-        nuget sources add -name "github" -source https://nuget.pkg.github.com/rcangus/index.json -StorePasswordInClearText -username rcangus -password ${{ secrets.PACKAGES_PAT }}
+        dotnet nuget add source https://nuget.pkg.github.com/rcangus/index.json --name "github" --store-password-in-clear-text --username rcangus --password ${{ secrets.PACKAGES_PAT }}
         dotnet restore source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
     - name: Build
       run: dotnet build source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --configuration Release --no-restore
