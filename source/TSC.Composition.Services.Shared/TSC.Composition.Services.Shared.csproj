@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="MessageFormats\" />
+    <Folder Include="Queues\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.7.18" />
+    <PackageReference Include="Hangfire.JobsLogger" Version="0.2.1" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.18" />
+    <PackageReference Include="TCS.Shared" Version="419887178.0.0" />
+  </ItemGroup>
+  
+</Project>
