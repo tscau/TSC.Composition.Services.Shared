@@ -18,10 +18,10 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: nuget sources add -name "github" -source https://nuget.pkg.github.com/rcangus/index.json -StorePasswordInClearText -username rcangus -password ${{ secrets.PACKAGES_PAT }}
-        nuget sources add -name "nuget" -source https://api.nuget.org/v3/index.json
-        dotnet restore
+      run: 
+        nuget sources add -name "github" -source https://nuget.pkg.github.com/rcangus/index.json -StorePasswordInClearText -username rcangus -password ${{ secrets.PACKAGES_PAT }}
+        dotnet restore source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --no-restore --verbosity normal
