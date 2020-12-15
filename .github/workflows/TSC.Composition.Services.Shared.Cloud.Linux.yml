@@ -30,35 +30,11 @@ jobs:
     - name: Set Version
       id: set-version
       shell: pwsh
-      #run: |
-        #$rev = $env:GITHUB_RUN_NUMBER
-        #Write-Host "rev number is " $rev
-        #
-        #$branch = $env:GITHUB_REF;
-        #
-        #if($branch -like '*feature*'){
-        #    #get the branch name from the last / 
-        #    $featureName = $branch.Substring($branch.LastIndexOf('/')+1)
-        #    $ver = -join("1.0.", $featureName, ".", $rev)
-        #} else {
-        #    $ver = -join("1.0.", $rev)
-        #}
-        #echo "NUGET_VERSION=1.0.33" >> $GITHUB_ENV
-        #echo "::set-output name=NUGET_VERSION::$($ver)"
       run: ./.github/SetVersioning_NuGet_GitHub.ps1
-    - name: Set Value 2
-      run: |
-        #echo "NUGET_VERSION=1.0.27" >> $GITHUB_ENV
-        echo "environment=development" >> $GITHUB_ENV
-        echo "action_state=yellow" >> $GITHUB_ENV
     - name: Pack
-      #if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        echo ${{ steps.set-version.outputs.NUGET_VERSION }}
-        echo "NUGET_VERSION = $NUGET_VERSION"
-        echo "Environment = $environment"
-        echo "action_state = $action_state"
         dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=${{ steps.set-version.outputs.NUGET_VERSION }} source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
-    #- name: Upload Artifact
-      #if: ${{ matrix.os == 'ubuntu-latest' }}
-      #run: dotnet nuget push "source/TSC.Composition.Services.Shared/bin/Release/*.nupkg" -k ${{ secrets.PACKAGES_PAT }} -s "https://nuget.pkg.github.com/tscau/index.json" --skip-duplicate
+    - name: Upload Artifact
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: dotnet nuget push "source/TSC.Composition.Services.Shared/bin/Release/*.nupkg" -k ${{ secrets.PACKAGES_PAT }} -s "https://nuget.pkg.github.com/tscau/index.json" --skip-duplicate
