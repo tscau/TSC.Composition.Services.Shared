@@ -38,8 +38,8 @@ jobs:
     - name: Pack
       #if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        echo "NUGET_VERSION = ${Env:NUGET_VERSION}"
-        echo "${Env:environment}"
+        echo "NUGET_VERSION = $NUGET_VERSION"
+        echo "Environment = $environment"
         echo "action_state = $action_state"
         #dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=${env:NUGET_VERSION} source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
     #- name: Upload Artifact
