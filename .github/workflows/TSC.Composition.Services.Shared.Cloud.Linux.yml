@@ -33,8 +33,8 @@ jobs:
     - name: Pack
       #if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        echo 'NUGET_VERSION = ' $NUGET_VERSION
-        dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=$NUGET_VERSION source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
+        echo 'NUGET_VERSION = ' ${env:NUGET_VERSION}
+        dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=${Env:NUGET_VERSION} source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
     - name: Upload Artifact
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: dotnet nuget push "source/TSC.Composition.Services.Shared/bin/Release/*.nupkg" -k ${{ secrets.PACKAGES_PAT }} -s "https://nuget.pkg.github.com/tscau/index.json" --skip-duplicate

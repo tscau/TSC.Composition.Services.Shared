@@ -11,4 +11,5 @@ if($branch -like '*feature*'){
     $ver = -join("1.0.", $rev)
 }
 echo "NUGET_VERSION=$($ver)" >> $GITHUB_ENV
+#Lets try setting an output parameter
 Write-Host "ver = $($ver)"
