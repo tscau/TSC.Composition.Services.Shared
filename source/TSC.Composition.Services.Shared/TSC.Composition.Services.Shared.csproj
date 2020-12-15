@@ -8,14 +8,14 @@
     <PackageDescription>Contains the base shared code that all composition services can use</PackageDescription>
     <RepositoryUrl>https://github.com/tscau/TSC.Composition.Services.Shared</RepositoryUrl>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <ProjectGuid>2F35C975-BF67-48DD-A568-2FA5655FC0B8</ProjectGuid>
+    <ProjectGuid>{3E09565D-FD30-4B26-BC3D-1C779707BB2E}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Hangfire" Version="1.7.18" />
     <PackageReference Include="Hangfire.JobsLogger" Version="0.2.1" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.18" />
-    <PackageReference Include="TCS.Shared" Version="419887178.0.0" />
+    <PackageReference Include="TCS.Shared" Version="*" />
   </ItemGroup>
   
 </Project>

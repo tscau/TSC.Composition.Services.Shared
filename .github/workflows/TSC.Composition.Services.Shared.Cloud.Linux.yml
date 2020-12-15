@@ -1,4 +1,4 @@
-name: SC.Composition.Services.Shared.Cloud
+name: TSC.Composition.Services.Shared.Cloud
 
 on:
   push:
