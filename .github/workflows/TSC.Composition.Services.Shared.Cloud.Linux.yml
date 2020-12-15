@@ -1,4 +1,4 @@
-name: .NET Core
+name: SC.Composition.Services.Shared.Cloud
 
 on:
   push:
@@ -8,13 +8,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ${{ matrix.os }}
      strategy:
       matrix: 
        os: [ubuntu-latest]
        #os: [ubuntu-latest, windows-latest, macos-latest]
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
