@@ -34,11 +34,13 @@ jobs:
       run: |
         echo "NUGET_VERSION=1.0.27" >> $GITHUB_ENV
         echo "environment=development" >> $GITHUB_ENV
+        echo "action_state=yellow" >> $GITHUB_ENV
     - name: Pack
       #if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         echo "NUGET_VERSION = ${Env:NUGET_VERSION}"
         echo "${Env:environment}"
+        echo "action_state = $action_state"
         #dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=${env:NUGET_VERSION} source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
     #- name: Upload Artifact
       #if: ${{ matrix.os == 'ubuntu-latest' }}
