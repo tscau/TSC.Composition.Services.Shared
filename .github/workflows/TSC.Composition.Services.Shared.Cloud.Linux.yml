@@ -31,9 +31,9 @@ jobs:
       shell: pwsh
       run: ./.github/SetVersioning_NuGet_GitHub.ps1
     - name: Pack
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       with:
         nuget_version: ${{env.NUGET_VERSION}}
-      if: ${{ matrix.os == 'ubuntu-latest' }}
       run: dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=${{ nuget_version }} source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
     - name: Upload Artifact
       if: ${{ matrix.os == 'ubuntu-latest' }}
