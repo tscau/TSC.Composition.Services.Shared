@@ -5,7 +5,7 @@ $branch = $env:GITHUB_REF;
 
 if($branch -like '*feature*'){
     #get the branch name from the last / 
-    $featureName = $branch.Substring($branch.LastIndexOf('/')+1)4
+    $featureName = $branch.Substring($branch.LastIndexOf('/')+1)
     $ver = -join("1.0.", $featureName, $rev
     $env:NUGET_VERSION = $ver
 } else {
