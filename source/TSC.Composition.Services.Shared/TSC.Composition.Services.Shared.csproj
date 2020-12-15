@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>TCS.Composition.Services.Shared</PackageId>
+    <Authors>The Software Company</Authors>
+    <Company>The Software Company</Company>
+    <PackageDescription>Contains the base shared code that all composition services can use</PackageDescription>
+    <RepositoryUrl>https://github.com/rcangus/TSC.Composition.Services.Shared</RepositoryUrl>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <ProjectGuid>2F35C975-BF67-48DD-A568-2FA5655FC0B8</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
