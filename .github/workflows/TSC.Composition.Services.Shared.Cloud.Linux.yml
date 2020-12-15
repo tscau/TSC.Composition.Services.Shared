@@ -28,6 +28,7 @@ jobs:
     #- name: Test
     #  run: dotnet test source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --no-restore --verbosity normal
     - name: Set Version
+      id: set-version
       shell: pwsh
       run: |
         $rev = $env:GITHUB_RUN_NUMBER
@@ -43,6 +44,7 @@ jobs:
             $ver = -join("1.0.", $rev)
         }
         echo "NUGET_VERSION=1.0.33" >> $GITHUB_ENV
+        echo "::set-output name=NUGET_VERSION::$($ver)"
       #run: ./.github/SetVersioning_NuGet_GitHub.ps1
     - name: Set Value 2
       run: |
@@ -52,6 +54,7 @@ jobs:
     - name: Pack
       #if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
+        echo ${{ steps.set-version.outputs.NUGET_VERSION }}
         echo "NUGET_VERSION = $NUGET_VERSION"
         echo "Environment = $environment"
         echo "action_state = $action_state"
