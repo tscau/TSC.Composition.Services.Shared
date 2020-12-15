@@ -15,29 +15,29 @@ jobs:
       #os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-    - name: Add GitHub Packages and Restore
-      run: |
-        dotnet nuget add source https://nuget.pkg.github.com/rcangus/index.json --name "github" --store-password-in-clear-text --username rcangus --password ${{ secrets.PACKAGES_PAT }}
-        dotnet restore source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
-    - name: Build
-      run: dotnet build source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --configuration Release --no-restore
-    - name: Test
-      run: dotnet test source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --no-restore --verbosity normal
+    #- name: Setup .NET Core
+    #  uses: actions/setup-dotnet@v1
+    #  with:
+    #    dotnet-version: 3.1.301
+    #- name: Add GitHub Packages and Restore
+    #  run: |
+    #    dotnet nuget add source https://nuget.pkg.github.com/rcangus/index.json --name "github" --store-password-in-clear-text --username rcangus --password ${{ secrets.PACKAGES_PAT }}
+    #    dotnet restore source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
+    #- name: Build
+    #  run: dotnet build source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --configuration Release --no-restore
+    #- name: Test
+    #  run: dotnet test source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --no-restore --verbosity normal
     - name: Set Version
       shell: pwsh
       run: ./.github/SetVersioning_NuGet_GitHub.ps1
     - name: Set Value 2
       run: |
-        echo "{NUGET_VERSION}={1.0.27}" >> $GITHUB_ENV
+        echo "NUGET_VERSION=1.0.27" >> $GITHUB_ENV
     - name: Pack
       #if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         echo 'NUGET_VERSION = ' ${env:NUGET_VERSION}
-        dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=${env:NUGET_VERSION} source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
-    - name: Upload Artifact
-      if: ${{ matrix.os == 'ubuntu-latest' }}
-      run: dotnet nuget push "source/TSC.Composition.Services.Shared/bin/Release/*.nupkg" -k ${{ secrets.PACKAGES_PAT }} -s "https://nuget.pkg.github.com/tscau/index.json" --skip-duplicate
+        #dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=${env:NUGET_VERSION} source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
+    #- name: Upload Artifact
+      #if: ${{ matrix.os == 'ubuntu-latest' }}
+      #run: dotnet nuget push "source/TSC.Composition.Services.Shared/bin/Release/*.nupkg" -k ${{ secrets.PACKAGES_PAT }} -s "https://nuget.pkg.github.com/tscau/index.json" --skip-duplicate
