@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TSC.Composition.Services.Shared.Queues
+﻿namespace TSC.Composition.Services.Shared.Queues
 {
     public class SchedulerQueues
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TSC.Shared;
+﻿using TSC.Shared;
 
 namespace TSC.Composition.Services.Shared.MessageFormats
 {
