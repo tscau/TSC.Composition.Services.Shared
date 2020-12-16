@@ -15,22 +15,52 @@ jobs:
       #os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '11.0.9' # The JDK version to make available on the path.
+        java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+        architecture: x64 # (x64 or x86) - defaults to x64
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: Add GitHub Packages and Restore
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Cache SonarCloud scanner
+      id: cache-sonar-scanner
+      uses: actions/cache@v1
+      with:
+        path: ./.sonar/scanner
+        key: ${{ runner.os }}-sonar-scanner
+        restore-keys: ${{ runner.os }}-sonar-scanner
+    - name: Install SonarCloud scanner
+      if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+      shell: pwsh
       run: |
-        dotnet nuget add source https://nuget.pkg.github.com/rcangus/index.json --name "github" --store-password-in-clear-text --username rcangus --password ${{ secrets.PACKAGES_PAT }}
-        dotnet restore source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj
-    - name: Build
-      run: dotnet build source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --configuration Release --no-restore
-    - name: Test
-      run: dotnet test source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj --no-restore --verbosity normal
+        New-Item -Path ./.sonar/scanner -ItemType Directory
+        dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner   
     - name: Set Version
       id: set-version
       shell: pwsh
-      run: ./.github/SetVersioning_NuGet_GitHub.ps1
+      run: ./.github/SetVersioning_NuGet_GitHub.ps1 
+    - name: Add GitHub Packages and Restore
+      run: |
+        dotnet nuget add source https://nuget.pkg.github.com/rcangus/index.json --name "github" --store-password-in-clear-text --username rcangus --password ${{ secrets.PACKAGES_PAT }}
+        dotnet restore source/TSC.Composition.Services.Shared.sln
+    - name: Build + Test + SonarQube
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        mkdir source/results
+        ./.sonar/scanner/dotnet-sonarscanner begin /k:"tscau_TSC.Composition.Services.Shared" /o:"tscau" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="source/results/**/coverage.opencover.xml" /d:sonar.cs.vstest.reportsPaths="source/results/*.trx" /v:${{ steps.set-version.outputs.RELEASE_NAME }}
+        dotnet msbuild source/TSC.Composition.Services.Shared/TSC.Composition.Services.Shared.csproj /p:configuration=Release
+        #dotnet test source/TSC.Composition.Services.Shared.UnitTests/TSC.Composition.Services.Shared.UnitTests.csproj --verbosity n --collect="XPlat Code Coverage" --settings source/coverlet.runsettings --logger trx --results-directory source/results /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=source/results
+        ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
     - name: Pack
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |

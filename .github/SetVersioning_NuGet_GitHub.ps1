@@ -14,3 +14,4 @@ echo "NUGET_VERSION=$($ver)" >> $GITHUB_ENV
 #Lets try setting an output parameter
 Write-Host "ver = $($ver)"
 echo "::set-output name=NUGET_VERSION::$($ver)"
+echo "::set-output name=RELEASE_NAME::$($ver)"
