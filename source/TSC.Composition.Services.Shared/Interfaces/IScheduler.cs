@@ -1,8 +1,5 @@
 ﻿using Hangfire;
 using Hangfire.Server;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TSC.Composition.Services.Shared.MessageFormats;
 using TSC.Composition.Services.Shared.Queues;
 

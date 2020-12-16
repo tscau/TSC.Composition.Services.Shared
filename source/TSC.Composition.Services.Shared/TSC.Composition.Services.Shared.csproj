@@ -9,7 +9,12 @@
     <RepositoryUrl>https://github.com/tscau/TSC.Composition.Services.Shared</RepositoryUrl>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <ProjectGuid>{3E09565D-FD30-4B26-BC3D-1C779707BB2E}</ProjectGuid>
+    <CodeAnalysisRuleSet>..\.sonarlint\tscau_tsc.composition.services.sharedcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\tscau_tsc.composition.services.shared\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Hangfire" Version="1.7.18" />

@@ -1,0 +1,15 @@
+{
+  "ServerUri": "https://sonarcloud.io/",
+  "Organization": {
+    "Key": "tscau",
+    "Name": "The Software Company"
+  },
+  "ProjectKey": "tscau_TSC.Composition.Services.Shared",
+  "ProjectName": "TSC.Composition.Services.Shared",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AXZMPjQr7VoItt5BNIaL",
+      "ProfileTimestamp": "2020-11-27T08:30:44Z"
+    }
+  }
+}
